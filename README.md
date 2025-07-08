@@ -6,13 +6,12 @@ A modern, responsive personal website built with HTML, CSS, and JavaScript featu
 
 - 🎨 Modern design with particles animation
 - 📱 Fully responsive
-- ⚡ Ultra-fast performance with Bun bundling
+- ⚡ Simple and fast static website
 - 🐳 Docker ready
-- 📦 Lightning-fast build system
+- 📦 No build process required
+- 🔄 Automated Docker builds with GitHub Actions
 
 ## Quick Start with Docker
-
-### Option 1: Using Docker Compose (Recommended)
 
 ```bash
 # Build and run the website
@@ -21,10 +20,10 @@ docker-compose up -d
 # Access the website at http://localhost:8080
 ```
 
-### Option 2: Using Docker directly
+### Using Docker directly
 
 ```bash
-# Build the Docker image
+# Build the container
 docker build -t jacklei-website .
 
 # Run the container
@@ -33,40 +32,34 @@ docker run -d -p 8080:80 --name jacklei-website jacklei-website
 # Access the website at http://localhost:8080
 ```
 
+## GitHub Actions
+
+This repository includes automated Docker builds via GitHub Actions:
+
+### GitHub Container Registry (Default)
+- **Workflow**: `.github/workflows/docker-build.yml`
+- **Registry**: `ghcr.io`
+- **Image**: `ghcr.io/yourusername/jacklei-website`
+- **Triggers**: Push to main/master, tags, pull requests
+- **No setup required** - uses `GITHUB_TOKEN` automatically
+
+### Docker Hub (Alternative)
+- **Workflow**: `.github/workflows/docker-hub.yml`
+- **Registry**: `docker.io`
+- **Image**: `yourusername/jacklei-website`
+- **Setup required**: Add secrets `DOCKER_USERNAME` and `DOCKER_PASSWORD`
+
+### Using the Built Images
+
+```bash
+# From GitHub Container Registry
+docker run -d -p 8080:80 ghcr.io/yourusername/jacklei-website:main
+
+# From Docker Hub (if configured)
+docker run -d -p 8080:80 yourusername/jacklei-website:main
+```
+
 ## Development
-
-### Building with Bun
-
-```bash
-# Make build script executable
-chmod +x build.sh
-
-# Run the build process
-./build.sh
-```
-
-This will:
-- Install Bun dependencies
-- Bundle and optimize all assets with lightning speed
-- Create production-ready files in `dist/`
-- Show build information and file sizes
-
-### Development Server
-
-```bash
-# Start development server with hot reload
-bun run dev
-
-# Preview production build
-bun run preview
-```
-
-### Installing Bun
-
-If you don't have Bun installed:
-```bash
-curl -fsSL https://bun.sh/install | bash
-```
 
 ### Local Development
 
@@ -78,16 +71,22 @@ python -m http.server 8000
 
 # Using Node.js (if you have http-server installed)
 npx http-server -p 8000
+
+# Using PHP
+php -S localhost:8000
 ```
 
-## Project Structure
+### Project Structure
 
 ```
 jacklei.com/
 ├── assets/
 │   ├── css/          # Stylesheets
 │   ├── fonts/        # Font files
+│   ├── images/       # Images
 │   └── js/           # JavaScript files
+├── .github/
+│   └── workflows/    # GitHub Actions workflows
 ├── index.html        # Main page
 ├── Dockerfile        # Docker configuration
 ├── docker-compose.yml # Docker Compose configuration
@@ -101,7 +100,7 @@ jacklei.com/
 - JavaScript
 - Revolution Slider
 - Nginx (Docker deployment)
-- Bun (Ultra-fast JavaScript runtime & bundler)
+- GitHub Actions (CI/CD)
 
 ## License
 
